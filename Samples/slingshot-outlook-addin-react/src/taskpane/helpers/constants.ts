@@ -1,4 +1,4 @@
-export const BaseUri: string = "https://dev-my.slingshotapp.io/v1";
+export const BaseUri: string = "https://my.slingshotapp.io/v1";
 
 export const TokenSettingKey: string = "bearer_token";
 
