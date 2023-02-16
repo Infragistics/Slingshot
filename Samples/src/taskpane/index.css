@@ -1,0 +1,245 @@
+html,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+.ms-welcome__header {
+	padding: 20px;
+	padding-bottom: 30px;
+	padding-top: 100px;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	align-items: center;
+}
+
+.ms-welcome__main {
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	-webkit-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-flex: 1 0 0;
+	flex: 1 0 0;
+	padding: 10px 20px;
+}
+
+.ms-welcome__main>h2 {
+	width: 100%;
+	text-align: center;
+}
+
+.ms-welcome__features {
+	list-style-type: none;
+	margin-top: 20px;
+}
+
+.ms-welcome__features.ms-List .ms-ListItem {
+	padding-bottom: 20px;
+	display: -webkit-flex;
+	display: flex;
+}
+
+.ms-welcome__features.ms-List .ms-ListItem>.ms-Icon {
+	margin-right: 10px;
+}
+
+.ms-welcome__action.ms-Button--hero {
+	margin-top: 30px;
+}
+
+b {
+	font-weight: bold;
+}
+
+.appContainer {
+	width: 90%;
+	margin: auto;
+}
+
+.inputContainerVertical {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.inputContainerHorizontal {
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	gap: 8px;
+}
+
+.inputLabel {
+	margin-bottom: 4px;
+}
+
+.fullWidth {
+	width: 100%;
+}
+
+.loader {
+	border: 16px solid #f3f3f3;
+	border-radius: 50%;
+	border-top: 16px solid rgb(162, 182, 255);
+	width: 120px;
+	height: 120px;
+	-webkit-animation: spin 2s linear infinite;
+	/* Safari */
+	animation: spin 2s linear infinite;
+}
+
+option {
+	overflow: hidden !important;
+	white-space: nowrap !important;
+	text-overflow: ellipsis !important;
+}
+
+.checkboxOption {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.createTaskButton {
+	position: sticky;
+	bottom: 0;
+	width: 100%;
+}
+
+.dropdown-container {
+	height: min-content;
+	width: 100%;
+}
+
+li a,
+.dropbtn {
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: left;
+	text-overflow: ellipsis;
+}
+
+.dropbtn {
+	border-style: solid;
+	border-width: 1px;
+	border-color: gray;
+	color: black;
+}
+
+.dropbtn:hover {
+	background-color: rgb(162, 182, 255);
+	color: white;
+}
+
+.dropdown {
+	display: block;
+	position: relative;
+	float: left;
+	line-height: 10px;
+	width: 100%;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: white;
+	color: black;
+	border-style: solid;
+	border-width: 1px;
+	border-color: gray;
+	min-width: 100%;
+	z-index: 1;
+	list-style: none;
+	text-overflow: ellipsis;
+}
+
+.dropdown-content a {
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: left;
+	text-overflow: ellipsis;
+}
+
+.dropdown-sub-list {
+	display: none;
+	position: absolute;
+	background-color: white;
+	color: black;
+	border-style: solid;
+	border-width: 1px;
+	border-color: gray;
+	list-style: none;
+	margin: 0;
+	overflow-y: scroll;
+	overflow-x: visible;
+	max-height: 200px;
+	width: 70%;
+	text-overflow: ellipsis;
+}
+
+.dropdown-sub:hover>.dropdown-sub-list {
+	display: block;
+	position: absolute;
+}
+
+ul ul ul {
+	left: 25%;
+	margin-left: 1px;
+}
+
+li:hover {
+	background-color: rgb(162, 182, 255);
+	color: white;
+}
+
+.ms-List-surface {
+	margin-bottom: 42px
+}
+
+ol,
+ul {
+	padding-left: 0px !important;
+}
+
+.mainAppContainer {
+	width: 90%;
+	margin: auto;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
