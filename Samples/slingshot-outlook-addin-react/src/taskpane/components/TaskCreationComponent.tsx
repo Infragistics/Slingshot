@@ -132,6 +132,10 @@ export default class TaskCreationComponent extends React.Component<TaskCreationC
 		if (!isNullOrUndefined(item.start)) {
 			stateUpdate.startDate = new Date(item.start)
 		}
+		else
+		{
+			stateUpdate.startDate = new Date(Date.now())
+		}
 		if (!isNullOrUndefined(item.end)) {
 			stateUpdate.dueDate = new Date(item.end)
 		}

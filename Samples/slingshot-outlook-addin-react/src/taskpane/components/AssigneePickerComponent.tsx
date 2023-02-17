@@ -164,7 +164,7 @@ export default class AssigneePickerComponent extends React.Component<AssigneePic
 		if (!this.props.shouldDisplay || !this.state.loaded) {
 			return null;
 		}
-
+		
 		return (
 			<div className="inputContainerVertical">
 				<h3>Who should be assigned?</h3>

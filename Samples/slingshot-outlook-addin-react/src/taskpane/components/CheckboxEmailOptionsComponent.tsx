@@ -75,7 +75,7 @@ export const CheckboxEmailAddressDetailsOptionsComponent: React.FC<CheckboxEmail
 		onClick
 	} = p;
 
-	if (isNullOrUndefined(emailAddressDetails) || emailAddressDetails.length == 0) {
+	if (isNullOrUndefined(emailAddressDetails) || emailAddressDetails.length == 0 || isNullOrUndefined(emailAddressDetails[0])) {
 		return null
 	}
 
