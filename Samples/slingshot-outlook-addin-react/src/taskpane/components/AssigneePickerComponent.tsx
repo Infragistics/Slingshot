@@ -69,9 +69,9 @@ export default class AssigneePickerComponent extends React.Component<AssigneePic
 		if (!isNullOrUndefined(item.from)) {
 			if (item.from.emailAddress !== myEmail) {
 				stateUpdate.from = item.from
-			}
 
-			stateUpdate.selected.push(item.from.emailAddress)
+				stateUpdate.selected.push(item.from.emailAddress)
+			}
 		}
 
 		if (!isNullOrUndefined(item.to)) {
@@ -121,6 +121,8 @@ export default class AssigneePickerComponent extends React.Component<AssigneePic
 		stateUpdate.loaded = true
 
 		this.setState(stateUpdate)
+
+		this.props.onChange(stateUpdate.selected);
 	}
 
 	onOptionClick(email: string, checked: boolean) {
@@ -159,7 +161,7 @@ export default class AssigneePickerComponent extends React.Component<AssigneePic
 	}
 
 	render() {
-		if (this.props.shouldDisplay || !this.state.loaded) {
+		if (!this.props.shouldDisplay || !this.state.loaded) {
 			return null;
 		}
 

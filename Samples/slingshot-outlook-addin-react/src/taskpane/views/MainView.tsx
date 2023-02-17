@@ -62,6 +62,8 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 		this.assigneesChanged = this.assigneesChanged.bind(this);
 		this.taskSectionSelectionChanged = this.taskSectionSelectionChanged.bind(this);
 		this.onCreate = this.onCreate.bind(this);
+		this.getOrganizations = this.getOrganizations.bind(this);
+		this.getWorkspaces = this.getWorkspaces.bind(this);
 	}
 
 	componentDidMount() {
@@ -72,17 +74,17 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 			}
 			else {
 				var authorizationHeader = new AuthorizationHeader("Bearer " + token);
-				this.setState({ authorizationHeader, isAuthorized: true }, () => {
-					this.getOrganizations();
-					this.getWorkspaces();
+				this.setState({ authorizationHeader, isAuthorized: true }, async () => {
+					await this.getOrganizations();
+					await this.getWorkspaces();
 					this.setState({ initialized: true });
 				});
 			}
 		}
 	}
 
-	getOrganizations() {
-		fetch(BaseUri + "/organizations", this.state.authorizationHeader.get())
+	async getOrganizations() {
+		return fetch(BaseUri + "/organizations", this.state.authorizationHeader.get())
 			.then(r => r.json())
 			.then(data => {
 				if (isNullOrUndefined(data) || isNullOrUndefined(data.items)) {
@@ -94,14 +96,15 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 			});
 	}
 
-	getWorkspaces() {
-		fetch(BaseUri + "/workspaces", this.state.authorizationHeader.get())
+	async getWorkspaces() {
+		return fetch(BaseUri + "/workspaces", this.state.authorizationHeader.get())
 			.then(r => r.json())
 			.then(data => {
 				if (isNullOrUndefined(data) || isNullOrUndefined(data.items)) {
 					this.setError("Problems retrieving workspaces from Slingshot");
 				}
 				else {
+					console.log("GOT WORKSPACES")
 					this.setState({ workspaces: data.items as Workspace[] })
 				}
 			});
@@ -227,10 +230,11 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 	}
 
 	assigneesChanged(listOfEmailsAssigned: string[]) {
-		var assignees = this.state.assignees
+		console.log("CHANGED", listOfEmailsAssigned, this.state.workspaces)
 
 		if (isNullOrUndefined(listOfEmailsAssigned) || listOfEmailsAssigned.length === 0) {
-			assignees = null
+			console.log("HUH", listOfEmailsAssigned)
+			this.setState({ assignees: null })
 		}
 		else if (!isNullOrUndefined(this.state.workspaces)) {
 			var listOfAssignees = []
@@ -255,13 +259,13 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 
 			})
 
-			assignees = listOfAssignees
-		}
 
-		this.setState({ assignees })
+			console.log("UPDATING", listOfAssignees)
+			this.setState({ assignees: listOfAssignees })
+		}
 	}
 
-	findMemberLinksInGroupByEmail(listOfGroups: Organization[] | Workspace[] | Project[], email: string): MemberInfo {
+	findMemberLinksInGroupByEmail(listOfGroups: Organization[] | Workspace[] | Project[], email: string): MemberInfo {		
 		for (let i = 0; i < listOfGroups.length; i++) {
 			var group = listOfGroups[i];
 
@@ -301,6 +305,8 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 			);
 		}
 
+		console.log("RENDER", this.state.assignees)
+
 		return (
 			<div className="inputContainerVertical">
 				<div className="inputContainerVertical mainAppContainer">
@@ -312,18 +318,18 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 					}
 					<ParentPickerComponent
 						authorizationHeader={this.state.authorizationHeader.get()}
-						onChange={this.taskSectionSelectionChanged}
-						onError={this.setError}
+						onChange={this.taskSectionSelectionChanged.bind(this)}
+						onError={this.setError.bind(this)}
 					/>
 					<br />
 					<TaskCreationComponent
 						shouldDisplay={true}
-						onChange={this.taskContentChanged}
+						onChange={this.taskContentChanged.bind(this)}
 					/>
 					<br />
 					<AssigneePickerComponent
-						shouldDisplay={false}
-						onChange={this.assigneesChanged}
+						shouldDisplay={true}
+						onChange={this.assigneesChanged.bind(this)}
 					/>
 				</div>
 				<br />
