@@ -104,7 +104,6 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 					this.setError("Problems retrieving workspaces from Slingshot");
 				}
 				else {
-					console.log("GOT WORKSPACES")
 					this.setState({ workspaces: data.items as Workspace[] })
 				}
 			});
@@ -230,10 +229,7 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 	}
 
 	assigneesChanged(listOfEmailsAssigned: string[]) {
-		console.log("CHANGED", listOfEmailsAssigned, this.state.workspaces)
-
 		if (isNullOrUndefined(listOfEmailsAssigned) || listOfEmailsAssigned.length === 0) {
-			console.log("HUH", listOfEmailsAssigned)
 			this.setState({ assignees: null })
 		}
 		else if (!isNullOrUndefined(this.state.workspaces)) {
@@ -259,8 +255,6 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 
 			})
 
-
-			console.log("UPDATING", listOfAssignees)
 			this.setState({ assignees: listOfAssignees })
 		}
 	}
@@ -304,8 +298,6 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 				<AuthorizeView message="Please provide your API token." errorMessage={this.state.errorMessage} onSubmit={this.setAuthorizationToken} />
 			);
 		}
-
-		console.log("RENDER", this.state.assignees)
 
 		return (
 			<div className="inputContainerVertical">
