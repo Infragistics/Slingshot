@@ -32,6 +32,8 @@ export interface MainViewState {
 	workspaces: Workspace[];
 	organizations: Organization[];
 
+	assignees: string[];
+
 	newTask: Task;
 	created: boolean;
 }
@@ -49,6 +51,7 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 			selectedSection: null,
 			workspaces: null,
 			organizations: null,
+			assignees: null,
 			newTask: null,
 			created: false
 		};
@@ -58,6 +61,7 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 		this.taskContentChanged = this.taskContentChanged.bind(this);
 		this.assigneesChanged = this.assigneesChanged.bind(this);
 		this.taskSectionSelectionChanged = this.taskSectionSelectionChanged.bind(this);
+		this.onCreate = this.onCreate.bind(this);
 	}
 
 	componentDidMount() {
@@ -186,8 +190,8 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 			body["taskSection"] = { id: this.state.selectedSection.id, name: this.state.selectedSection.name }
 		}
 
-		if (!isNullOrUndefined(task.assignees) && task.assignees.length > 0) {
-			body["assignees"] = task.assignees
+		if (!isNullOrUndefined(this.state.assignees) && this.state.assignees.length > 0) {
+			body["assignees"] = this.state.assignees
 		}
 
 		this.addTask(body, () => this.setState({ created: true }), this.setError.bind(this));
@@ -211,22 +215,22 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 			}
 		}
 		else {
-			task.name = content.name,
-				task.description = content.description,
-				task.status = content.status,
-				task.priority = content.priority,
-				task.startDate = content.startDate,
-				task.dueDate = content.dueDate
+			task.name = content.name;
+			task.description = content.description;
+			task.status = content.status;
+			task.priority = content.priority;
+			task.startDate = content.startDate;
+			task.dueDate = content.dueDate;
 		}
 
 		this.setState({ newTask: task })
 	}
 
 	assigneesChanged(listOfEmailsAssigned: string[]) {
-		var task = this.state.newTask
+		var assignees = this.state.assignees
 
 		if (isNullOrUndefined(listOfEmailsAssigned) || listOfEmailsAssigned.length === 0) {
-			task.assignees = null
+			assignees = null
 		}
 		else if (!isNullOrUndefined(this.state.workspaces)) {
 			var listOfAssignees = []
@@ -243,8 +247,7 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 					listOfAssignees.push(memberLinkInOrgs);
 				}
 				else if (isNullOrUndefined(memberLinkInOrgs) && isNullOrUndefined(memberLinkInWorkspaces)) {
-					listOfAssignees.push(memberLinkInOrgs);
-
+					listOfAssignees.push({ email });
 				}
 				else if (isNullOrUndefined(memberLinkInOrgs) && !isNullOrUndefined(memberLinkInWorkspaces)) {
 					listOfAssignees.push(memberLinkInWorkspaces);
@@ -252,10 +255,10 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 
 			})
 
-			task.assignees = listOfAssignees
+			assignees = listOfAssignees
 		}
 
-		this.setState({ newTask: task })
+		this.setState({ assignees })
 	}
 
 	findMemberLinksInGroupByEmail(listOfGroups: Organization[] | Workspace[] | Project[], email: string): MemberInfo {
@@ -324,7 +327,7 @@ export default class MainView extends React.Component<MainViewProps, MainViewSta
 					/>
 				</div>
 				<br />
-				<button type="submit" className="fullWidth createTaskButton" title="main button" disabled={!this.isTaskValid() || this.state.created} onClick={this.onCreate.bind(this)}>
+				<button type="submit" className="fullWidth createTaskButton" title="main button" disabled={!this.isTaskValid() || this.state.created} onClick={this.onCreate}>
 					{this.state.created ? "Success, Task was created!" : "Create Task"}
 				</button>
 			</div>

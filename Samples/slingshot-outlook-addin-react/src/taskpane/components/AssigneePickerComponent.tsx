@@ -42,6 +42,12 @@ export default class AssigneePickerComponent extends React.Component<AssigneePic
 		this.readItem()
 	}
 
+	componentDidUpdate(_prevProps: Readonly<AssigneePickerComponentProps>, _prevState: Readonly<AssigneePickerComponentState>, _snapshot?: any): void {
+		if (this.state.selected.length !== _prevState.selected.length) {
+			this.props.onChange(this.state.selected);
+		}
+	}
+
 	readItem() {
 		var callback = this.populateFieldsFromBodyResult.bind(this)
 		Office.context.mailbox.item.body.getAsync(Office.CoercionType.Text, (result) => {
